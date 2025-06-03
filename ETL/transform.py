@@ -1,13 +1,19 @@
+##from prefect import task
+
+##@task
+##def transform_jobs():
+##    print("TRANSFORMACIÓN DE OFERTAS DE LINKEDIN")
+
 from prefect import task
 from datetime import datetime
 
 @task
-def transform_cars(cars):
-    print("TRANSFORMACIÓN DE OFERTAS DE CARROS SEMINUEVOS")
-    for car in cars:
+def transform_jobs(jobs):
+    print("TRANSFORMACIÓN DE OFERTAS DE LINKEDIN")
+    for job in jobs:
         try:
-            if car["date"] is not None:
-                car["date"] = datetime.strptime(car["date"], "%d %b %Y").date()
+            if job["date"] is not None:
+                job["date"] = datetime.strptime(job["date"], "%d %b %Y").date()
         except ValueError:
-            car["date"] = None
-    return cars
+            job["date"] = None
+    return jobs

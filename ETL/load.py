@@ -1,9 +1,14 @@
+##from prefect import task
+
+##@task
+##def load_jobs():
+##    print("CARGA DE OFERTAS DE LINKEDIN")
 from prefect import task
 import mysql.connector
 
 @task
-def load_cars(cars):
-    print("CARGA DE OFERTAS DE CARROS SEMINUEVOS")
+def load_jobs(jobs):
+    print("CARGA DE OFERTAS DE LINKEDIN")
     conn = mysql.connector.connect(
         host="localhost",
         user="root",
@@ -13,23 +18,20 @@ def load_cars(cars):
     cursor = conn.cursor()
 
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS autos_seminuevos (
+        CREATE TABLE IF NOT EXISTS ofertas (
             id INT AUTO_INCREMENT PRIMARY KEY,
-            titulo VARCHAR(255),
-            precio DOUBLE,
-            kilometraje VARCHAR(50),
-            ubicacion VARCHAR(255),
-            combustible VARCHAR(50),
-            transmision VARCHAR(50),
-            enlace LONGTEXT
+            title VARCHAR(255),
+            location VARCHAR(255),
+            link TEXT,
+            date DATE
         )
     """)
 
-    for car in cars:
+    for job in jobs:
         cursor.execute("""
-            INSERT INTO autos_seminuevos (titulo, precio,kilometraje,ubicacion,combustible,transmision,enlace)
-            VALUES (%s, %s, %s, %s, %s, %s, %s)
-        """, (car["titulo"], car["precio"], car["kilometraje"], car["ubicacion"], car["combustible"], car["transmision"], car["enlace"]))
+            INSERT INTO ofertas(title, location, link, date)
+            VALUES (%s, %s, %s, %s)
+        """, (job["title"], job["location"], job["link"], job["date"]))
 
     conn.commit()
     cursor.close()
