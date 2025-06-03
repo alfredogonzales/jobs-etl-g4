@@ -1,5 +1,5 @@
 # jobs-etl-g4
-pipeline para extraer ofertas laborales
+pipeline para extraer datos de neoauto
 ## Autor: Alfredo Gonzales
 
 # PASOS PARA DESPLEGAR PROYECTO
